@@ -278,16 +278,25 @@
 
                             </div>
                           
+                           <div class="soldivler">
+                         
+                             <h4>İlan Sektörü</h4>
+                             @foreach($sektorler as $sektor)
+                              <input type="checkbox" name="sektor[]" class="checkboxClass" value="{{$sektor->id}}"> {{$sektor->adi}}<br>
+                             @endforeach
+                      
+                            </div>
+
                             <div class="soldivler" id="radioDiv">
                                     <h4>İlan Türü</h4>
                                     <input type="radio" name="ilanTuru[]" class="tur" value="Mal"><span class="lever"></span>Mal<br>
                                     <input type="radio" name="ilanTuru[]" class="tur" value="Hizmet"><span class="lever"></span>Hizmet<br>
                                     <input type="radio" name="ilanTuru[]" class="tur" value="Yapım İşi"><span class="lever"></span>Yapım İşi
                             </div>
-                             <div class="soldivler" id="radioDiv"> 
+                             <div class="soldivler" id="radioDiv4"> 
                                     <h4>Sözleşme Türü</h4>
-                                    <input type="radio" name="sozlesmeTuru[]" class="tur" value="Birim Fiyatlı"><span class="lever"></span>Birim Fiyatlı<br>
-                                    <input type="radio" name="sozlesmeTuru[]" class="tur" value="Götürü Bedel"><span class="lever"></span>Götürü Bedel<br>
+                                    <input type="radio" name="sozlesmeTuru[]" class="sozlesme" value="Birim Fiyatlı"><span class="lever"></span>Birim Fiyatlı<br>
+                                    <input type="radio" name="sozlesmeTuru[]" class="sozlesme" value="Götürü Bedel"><span class="lever"></span>Götürü Bedel<br>
 
                             </div>
                             <div class="soldivler" id="radioDiv2">
@@ -301,7 +310,7 @@
 
                                     <h4>Ödeme Türleri</h4>
                                     @foreach($odeme_turleri as $odeme)
-                                     <input type="checkbox" name="odeme[]" class="checkboxClass" value="{{$odeme->id}}"> {{$odeme->adi}}<br>
+                                     <input type="checkbox" name="odeme[]" class="checkbox" value="{{$odeme->id}}"> {{$odeme->adi}}<br>
                                     @endforeach
 
                             </div>
@@ -343,7 +352,14 @@
                                     selectedIl.push($(this).val());
                                 });
                             }
-                            
+                            var selectedOdeme = new Array();
+                            var n = jQuery('.checkbox:checked').length;
+                            if (n > 0){
+                                jQuery('.checkbox:checked').each(function(){
+                                    selectedOdeme.push($(this).val());
+                                });
+                            }
+                            alert(selectedOdeme);
                             var selectedTur = "";
                             var selected = $("#radioDiv input[type='radio']:checked");
                             if (selected.length > 0) {
@@ -354,11 +370,7 @@
                             if (selected2.length > 0) {
                                 selectedUsul = selected2.val();
                             }
-                            var selectedUsul = "";
-                            var selected2 = $("#radioDiv2 input[type='radio']:checked");
-                            if (selected2.length > 0) {
-                                selectedUsul = selected2.val();
-                            }
+                           
                             var selectedSearch = "";
                             var inputSearch = "";
                             var selected3 = $("#radioDiv3 input[type='radio']:checked");
@@ -366,11 +378,19 @@
                                 selectedSearch = selected3.val();
                                 inputSearch=$('#search').val();
                             }
+                            var selectedSozlesme = "";
+                            var selected4 = $("#radioDiv4 input[type='radio']:checked");
+                            if (selected4.length > 0) {
+                                selectedSozlesme = selected4.val();
+                            }
                             alert(selectedSearch);
                             $.ajax({
                               type:"GET",
                               url: "ilanAraFiltre",
-                              data:{il:selectedIl,bas_tar:basTar,bit_tar:bitTar,sektor:selectedSektor,tur:selectedTur,usul:selectedUsul,radSearch:selectedSearch,input:inputSearch},
+                              data:{il:selectedIl,bas_tar:basTar,bit_tar:bitTar,sektor:selectedSektor,tur:selectedTur,
+                                    usul:selectedUsul,radSearch:selectedSearch,input:inputSearch,odeme:selectedOdeme,
+                                    sozles:selectedSozlesme
+                                   },
                               cache: false,
                               success: function(data){
                                  console.log(data);
@@ -407,6 +427,18 @@
                         auto_load();
                     });
                     $('.usul').click(function(){
+                        auto_load();
+                    });
+                    $('.sozlesme').click(function(){
+                        auto_load();
+                    });
+                    $('.check').click(function(){
+                        auto_load();
+                    });
+                     $('.checkbox').click(function(){
+                        auto_load();
+                    });
+                    $('.checkboxClass').click(function(){
                         auto_load();
                     });
                 
