@@ -24,7 +24,7 @@
 
 div#header{
   width: 100%;
-  height: 100px;
+ 
   background: rgba(99,184,255,1);
   margin: 0;
   padding: 5px;
@@ -32,9 +32,6 @@ div#header{
 }
 
 
-div#contentarea{
-  padding: 10px;
-}
 
 body.sticky div#header{
   position: fixed;

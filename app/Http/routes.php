@@ -37,11 +37,13 @@ use Illuminate\Http\Request;
     Route::get('/ilanAra', function (Request $request) {
          $iller = App\Il::all();
           $sektorler= App\Sektor::all();
+           $odeme_turleri= \App\OdemeTuru::all();
             $querys = Ilan::paginate(5);
+            
             //$query->orwhere('id',12)->get();
 
 
-        return view('Firma.ilan.ilanAra')->with('iller', $iller)->with('sektorler',$sektorler)->with('querys',$querys);
+        return view('Firma.ilan.ilanAra')->with('iller', $iller)->with('sektorler',$sektorler)->with('querys',$querys)->with('odeme_turleri',$odeme_turleri);
     });
     Route::get('/ilanAraFiltre',function () {
        $querys = DB::table('ilanlar')

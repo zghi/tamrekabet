@@ -26,6 +26,7 @@ class FirmaIlanController extends Controller
         $para_birimleri= \App\ParaBirimi::all();
         $iller = Il::all();
         $birimler=  \App\Birim::all();
+       
         
         /*
          
